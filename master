@@ -1,0 +1,122 @@
+import java.util.*;
+public class master{
+  public static int[] swap(int a, int b){
+    int[] c = {a,b};
+    int[] d = {b,a};
+    if(a>b){return c;}
+    return d;
+  }
+  
+  public static int partition(int[] a, int lo, int hi){
+    int p = a[hi];
+    int i = lo - 1;
+    for(int j = lo; j <= hi - 1; j++){
+      if(a[j] <= p){
+        i++;
+        a[i] = swap(a[i], a[j])[0];
+        a[j] = swap(a[i], a[j])[1];
+      }
+      
+    }
+    a[i+1] = swap(a[i], a[hi])[0];
+    a[hi ] = swap(a[i], a[hi])[1];
+    
+    return i+1;
+  }
+  
+  public static void sortQ(int[] a, int lo, int hi){
+    if(lo < hi){
+      int b = partition(a, lo, hi);
+      sortQ(a, lo, b-1); 
+      sortQ(a, b+1, hi); 
+    }
+    System.out.println(Arrays.toString(a));
+  }
+  
+  public static void merge(int a[], int b, int c, int n) { 
+        int m_ = c - b + 1; 
+        int m_1 = n - c; 
+
+        int a1[] = new int [m_]; 
+        int a2[] = new int [m_1]; 
+  
+        for (int i=0; i < m_; i++){
+            a1[i] = a[b + i]; }
+        for (int j=0; j < m_1; j++) {
+            a2[j] = a[c + 1+ j]; }
+        int i = 0, j = 0; 
+        int k = b; 
+        while (i < m_ && j < m_1) { 
+            if (a1[i] <= a2[j]) { 
+                a[k] = a1[i]; 
+                i++; } 
+            else{ a[k] = a2[j]; j++; } k++; } 
+        while (i < m_) { 
+            a[k] = a1[i]; 
+            i++; k++; 
+        } 
+        while (j < m_1) { 
+            a[k] = a2[j]; 
+            j++; k++; 
+        } 
+    } 
+  
+    public static void sortS(int[] b, int c){
+    int f = 0;
+    for(int i = b.length-1; i > 0; i--){
+      if(b[i] < c && b[i-1] > c){
+        f++;
+        System.out.println("Num Compare " + f);
+        break;
+      }
+      if(f>100){
+        System.out.println("Unreachable number");
+        break;
+      }
+    }
+    }
+  
+  
+   public static void sortM(int a[], int b, int c) { 
+        if (b < c) {
+            sortM(a, b, (b+c)/2); 
+            sortM(a , (b+c)/2+1, c); 
+            merge(a, b, (b+c)/2, c);} 
+    } 
+  
+  
+  public static void sortI(int[] a) { 
+      for (int i = 0; i < a.length; i++) { 
+            int c = a[i]; //static
+            int j = i - 1; // needs to be a value, not variable for i-1 as the element at i-1 (j) needs to decrement with i as it compares
+            while (j >= 0 && a[j] > c) { 
+                a[j+1] = a[j]; 
+                j--; 
+              System.out.println(Arrays.toString(a));// compare and swap c through array
+            } 
+            a[j+1] = c;  
+        } 
+    } 
+  
+  
+  
+  public static void main(String[] arg){
+    int[] a = new int[10];
+   
+    new quiksort();
+    System.out.println();
+    
+    System.out.println("which algo, enter 1 for insertion 2 for merge 3 for quicksort or 4 for selection sort");
+    int b = new Scanner(System.in).nextInt();
+    if(b == 1)
+      master.sortI(a);
+    if(b == 2)
+      master.sortM(a, 0, a[a.length-1]);
+    if(b == 3)
+      master.sortQ(a,0,a[a.length-1]);
+    if(b == 4)
+      master.sortS(a, 0);
+    
+    
+  }
+}
